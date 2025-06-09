@@ -1,4 +1,5 @@
 import Team from "../models/team.module";
+import HACK from "../models/hackathon.model";
 
 export const createTeam = async (req, res) => {
 
@@ -109,12 +110,12 @@ export const getAllTeam = async (req, res) => {
             return res.status(400).json({ success: false, message: "id is required" })
         }
 
-        const teams = await Team.findOne({ _id: id })
-        if (teams == null) {
-            return res.status(400).json({ success: false, message: "team is empty" })
+        const Hackthon = await HACK.findById(id).populate('team'); // Assuming "team" is a ref to another model
+        if (!Hackthon) {
+            return res.status(404).json({ success: false, message: "Hackathon not found" });
         }
 
-        return res.status(200).json({ success: true, message: "get all teams member", teams: teams })
+        return res.status(200).json({ success: true, message: "get all teams member", teams: Hackthon.team })
 
     } catch (error) {
         console.log("error while getting all team", error.message)
@@ -124,25 +125,25 @@ export const getAllTeam = async (req, res) => {
 }
 
 
-export const getATeam = async(req,res) => {
+export const getATeam = async (req, res) => {
 
     try {
-        const {id} = req.params
-        if(!id){
-            return res.status(400).json({success : false,message : "id is required"})
+        const { id } = req.params
+        if (!id) {
+            return res.status(400).json({ success: false, message: "id is required" })
         }
 
-        const team = await Team.findOne({_id : id})
+        const team = await Team.findOne({ _id: id })
 
-        if(!team){
-            return res.status(400).json({success : false,message : "team not found"})
+        if (!team) {
+            return res.status(400).json({ success: false, message: "team not found" })
         }
 
-        return res.status(200).json({success : false,message : "team found successfully"})
+        return res.status(200).json({ success: false, message: "team found successfully" })
 
     } catch (error) {
-        console.log("error while fetching the team",error.message)
-        return res.status(500).json({success : false,message : "Internal Server Error",error : error.message})
+        console.log("error while fetching the team", error.message)
+        return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message })
     }
 }
 
