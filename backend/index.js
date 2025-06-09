@@ -7,6 +7,10 @@ import session from "express-session"
 import passport from "passport"
 import authRoutes from "./routes/auth.routes.js"
 import './utils/passport.js'
+import hackRoutes from "./routes/hackthon.routes.js"
+import profileRoutes from "./routes/profile.routes.js"
+import teamRoutes from "./routes/team.routes.js"
+
 
 dotenv.config()
 
@@ -30,7 +34,10 @@ app.use(express.json())
 app.use(cookieParser())
 
 
-app.use("/",authRoutes)
+app.use("/api/v1/auth",authRoutes)
+app.use("/api/v1/hack",hackRoutes)
+app.use("/api/v1/profile",profileRoutes)
+app.use("/api/v1/profile",teamRoutes)
 
 app.all("/",(req,res) => {
     res.send("BACKEND IS RUNNING")
