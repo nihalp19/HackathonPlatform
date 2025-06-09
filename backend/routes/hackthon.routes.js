@@ -4,11 +4,11 @@ import { adminRoute } from "../middleware/adminRoute"
 
 const router = express.Router()
 
-router.post("/create",protectRoute,adminRoute,createHackthon)
-router.get("/",getAllHackthons)
-router.patch("/update/:id",protectRoute,adminRoute,updateHackthon)
-router.get("/fetch/:id",fetchHackthon)
-router.delete("/delete/:id",protectRoute,adminRoute,deleteHackthon)
+router.post("/", protectRoute, adminRoute, createHackthon)
+router.get("/", getAllHackthons)
+router.patch("/:id", protectRoute, adminRoute, updateHackthon)
+router.get("/:id", fetchHackthon)
+router.delete("/:id", protectRoute, adminRoute, deleteHackthon)
 
 
 export default router

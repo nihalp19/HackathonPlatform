@@ -7,23 +7,21 @@ import session from "express-session"
 import passport from "passport"
 import authRoutes from "./routes/auth.routes.js"
 import './utils/passport.js'
-import hackRoutes from "./routes/hackthon.routes.js"
+import hackathonRoutes from "./routes/hackthon.routes.js"
 import profileRoutes from "./routes/profile.routes.js"
 import teamRoutes from "./routes/team.routes.js"
 
 
 dotenv.config()
 
-const PORT = process.env.PORT || 5000 
+const PORT = process.env.PORT || 5000
 
 const app = express()
 
-
-
 app.use(session({
-    secret : process.env.SESSION_SECRET,
-    resave : false,
-    saveUninitialized : false
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }))
 
 
@@ -34,17 +32,17 @@ app.use(express.json())
 app.use(cookieParser())
 
 
-app.use("/api/v1/auth",authRoutes)
-app.use("/api/v1/hack",hackRoutes)
-app.use("/api/v1/profile",profileRoutes)
-app.use("/api/v1/profile",teamRoutes)
+app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/hackathons", hackathonRoutes)
+app.use("/api/v1/profile", profileRoutes)
+app.use("/api/v1/teams", teamRoutes)
 
-app.all("/",(req,res) => {
+app.all("/", (req, res) => {
     res.send("BACKEND IS RUNNING")
 })
 
 
-app.listen(PORT,() => {
+app.listen(PORT, () => {
     connectDB()
     console.log(`SERVER STARTED AT PORT NO ${PORT}`)
 })
